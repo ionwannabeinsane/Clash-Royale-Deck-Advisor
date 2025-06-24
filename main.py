@@ -1,11 +1,15 @@
 # main.py
 
 import re
+import unicodedata
 from card_data import card_data
 from synergy_map import synergy_map
 
 def normalize(name: str) -> str:
     """Normalize a card name to lowercase alphanumeric only."""
+    name = name.strip()
+    name = unicodedata.normalize('NFKD', name)
+    name = name.encode('ascii', 'ignore').decode('ascii')
     return re.sub(r'[^a-z0-9]', '', name.lower())
 
 # Build a normalized lookup for faster matching
@@ -77,4 +81,5 @@ def recommend_synergies(deck):
         for partner in synergy_map.get(card, []):
             if partner not in deck:
                 suggestions.append(f"Add **{partner}** to synergize with **{card}**")
+    return suggestionsppend(f"Add **{partner}** to synergize with **{card}**")
     return suggestions
