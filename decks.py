@@ -1,6 +1,6 @@
 decks = [
     {
-        "deck": ["Hog Rider", "Firecracker", "Ice Spirit", "Cannon", "Log", "Musketeer", "Skeletons", "Knight"],
+        "deck": ["Hog Rider", "Firecracker", "Ice Spirit", "Cannon", "The Log", "Musketeer", "Skeletons", "Knight"],
         "label": "good"
     },
     {
