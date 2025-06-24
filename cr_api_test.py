@@ -1,4 +1,5 @@
 import os
+import unicodedata
 import re
 import requests
 from collections import Counter
@@ -13,6 +14,10 @@ def normalize(name: str) -> str:
     """
     Normalize card names: lowercase, strip non-alphanumerics.
     """
+    name = name.strip()
+    name = re.sub(r'^the\s+', '', name, flags=re.I)
+    name = unicodedata.normalize('NFKD', name)
+    name = name.encode('ascii', 'ignore').decode('ascii')
     return re.sub(r'[^a-z0-9]', '', name.lower())
 
 # 2) Build normalized lookup for card_data
@@ -57,7 +62,7 @@ def analyze_deck(deck):
     if analysis["win_condition"] < 1:
         recommendations.append("You need at least one win condition (e.g., Hog Rider, X-Bow)")
 
-    return analysis, recommendations
+    return analysis, recommendations, missing
 
 # 4) Synergy recommendation function
 def recommend_synergies(deck):
@@ -108,7 +113,7 @@ if __name__ == "__main__":
 
     # Analyze each deck
     print("\n🧠 Deck Analysis & Recommendations:")
-    for i, deck in enumerate(my_decks, start = 1):
+    for i, deck in enumerate(my_decks, start=1):
         analysis, recs, missing = analyze_deck(deck)
         if missing:
             print("⚠️ Skipped cards:", missing)
@@ -117,10 +122,9 @@ if __name__ == "__main__":
         recs.extend(synergy_recs)
 
 
-    # then your usual output
-    print(f"\nDeck {i+1}: {deck}")
-    print(" Breakdown:", analysis)
-    print(" Recommendations:")
-    for r in recs:
-        print("  -", r)
-    print("-"*40)
+        print(f"\nDeck {i}: {deck}")
+        print(" Breakdown:", analysis)
+        print(" Recommendations:")
+        for r in recs:
+            print("  -", r)
+        print("-" * 40)
