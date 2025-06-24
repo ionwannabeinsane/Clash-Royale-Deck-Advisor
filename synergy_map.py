@@ -18,7 +18,7 @@ synergy_map = {
     "Graveyard": ["Poison", "Baby Dragon", "Ice Wizard", "Knight", "Tornado", "Bowler"],
 
     # X-Bow
-    "X-Bow": ["Tesla", "Knight", "Archers", "Ice Spirit", "Fireball", "Log"],
+    "X-Bow": ["Tesla", "Knight", "Archers", "Ice Spirit", "Fireball", "The Log"],
 
     # Mortar Miner
     "Mortar": ["Miner", "Bats", "Skeletons", "Ice Spirit", "Fireball"],
